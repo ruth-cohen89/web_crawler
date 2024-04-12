@@ -2,7 +2,6 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 const fs = require("fs");
 const { URL } = require("url");
-const { uploadFileToS3, getFileFromS3 } = require("./utils/s3_service");
 
 async function crawlWebsite(entryUrl, folderPath) {
   let i = 1;
@@ -120,20 +119,11 @@ function isSameDomain(entryUrl, url) {
 
 // Example usage:
 // todo: delete after:
-// if (!fs.existsSync("./dev_files/larstornoe")) {
-//   fs.mkdirSync("./dev_files/larstornoe");
-// }
-// crawlWebsite("https://www.larstornoe.com", "larstornoe")
-//   .then((pagesDownloaded) =>
-//     console.log(`Pages downloaded: ${Array.from(pagesDownloaded).join(", ")}`)
-//   )
-//   .catch((error) => console.error(`Error: ${error.message}`));
-
-// getFileFromS3(
-//   "file.txt",
-//   "C:/Users/Ruth.LAPTOP-6SFCFEG0/Desktop/webcrawler/file.txt"
-// );
-// uploadFileToS3(
-//   "file.txt",
-//   "C:/Users/Ruth.LAPTOP-6SFCFEG0/Desktop/webcrawler/utils/file.txt"
-// );
+if (!fs.existsSync("larstornoe")) {
+  fs.mkdirSync("larstornoe");
+}
+crawlWebsite("https://www.larstornoe.com", "larstornoe")
+  .then((pagesDownloaded) =>
+    console.log(`Pages downloaded: ${Array.from(pagesDownloaded).join(", ")}`)
+  )
+  .catch((error) => console.error(`Error: ${error.message}`));
