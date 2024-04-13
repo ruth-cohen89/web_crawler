@@ -24,20 +24,6 @@ async function crawlWebsite(entryUrl, folderPath) {
         continue;
       }
 
-      // todo: check it and delete the log
-      const contentType = response.headers["content-type"];
-      if (!contentType.includes("text/html")) {
-        console.log(
-          "Non-HTML response, content type:",
-          contentType,
-          "on page:",
-          currentUrl
-        );
-        // Instead of directly returning, you might want to handle the error accordingly.
-        // For now, let's assume you want to continue crawling even after an error.
-        continue;
-      }
-
       const filename = getFileName(url);
       console.log(filename);
       fs.writeFileSync(`${folderPath}/${filename}`, response.data);
@@ -91,24 +77,9 @@ function getUrls(htmlContent, baseUrl) {
   const urls = [];
   $("a[href]").each((index, element) => {
     const absoluteUrl = new URL($(element).attr("href"), baseUrl).href;
-    const normalizedUrl = normalizeURL(absoluteUrl); // Normalize the URL
-    urls.push(normalizedUrl);
+    urls.push(absoluteUrl);
   });
   return urls;
-}
-
-// the job of normalizeURL function is to take in the input urls and then return
-// same output for the URLs that lead to the same page
-// example: 'http://www.boot.dev', 'http://www.BooT.dev', 'https://www.boot.dev' -> Although these three might look different
-// All these URLs obviously lead to the same page. So, we want the normalizeURL function to return same output URL
-// for all these URLs, like 'boot.dev'
-function normalizeURL(urlString) {
-  const urlObj = new URL(urlString);
-  const hostPath = `${urlObj.hostname}${urlObj.pathname}`;
-  if (hostPath.length > 0 && hostPath.slice(-1) === "/") {
-    return hostPath.slice(0, -1);
-  }
-  return hostPath;
 }
 
 function isSameDomain(entryUrl, url) {
@@ -118,11 +89,37 @@ function isSameDomain(entryUrl, url) {
 }
 
 // Example usage:
-// todo: delete after:
-if (!fs.existsSync("larstornoe")) {
-  fs.mkdirSync("larstornoe");
+function createLocalFolder(url) {
+  const hostname = getDomainName(url);
+  console.log(hostname);
+
+  if (!fs.existsSync(`websites/${hostname}`)) {
+    fs.mkdirSync(`websites/${hostname}`);
+    console.log("folder created");
+  }
+  return `websites/${hostname}`;
 }
-crawlWebsite("https://www.larstornoe.com", "larstornoe")
+
+function getDomainName(url) {
+  // Parse the URL to get the hostname
+  const { hostname } = new URL(url);
+
+  // Split the hostname by periods (.)
+  const parts = hostname.split(".");
+
+  // Remove the first part if it's 'www'
+  if (parts[0] === "www") {
+    parts.shift();
+  }
+
+  // Extract the first part as the domain name
+  const domain = parts[0];
+  return domain;
+}
+const entryPoint = "https://www.larstornoe.com";
+const folderPath = createLocalFolder(entryPoint);
+
+crawlWebsite(entryPoint, folderPath)
   .then((pagesDownloaded) =>
     console.log(`Pages downloaded: ${Array.from(pagesDownloaded).join(", ")}`)
   )
