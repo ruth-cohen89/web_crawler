@@ -4,16 +4,18 @@ const fs = require("fs");
 const { URL } = require("url");
 
 async function crawlWebsite(entryUrl, folderPath) {
-  let i = 1;
   const visitedUrls = new Set();
   const pagesDownloaded = new Set();
-  const queue = [{ url: entryUrl, parentUrl: "" }]; // { url, parentUrl }
+  const queue = [{ url: entryUrl, parentUrl: "" }];
 
   while (queue.length > 0) {
     const { url, parentUrl } = queue.shift();
 
-    //Skip if already visited
-    if (visitedUrls.has(url)) {
+    // Normalize the URL to avoid duplicates
+    const normalizedUrl = normalizeURL(url);
+
+    // Skip if already visited
+    if (visitedUrls.has(normalizedUrl)) {
       continue;
     }
 
@@ -25,16 +27,18 @@ async function crawlWebsite(entryUrl, folderPath) {
       }
 
       const filename = getFileName(url);
-      console.log(filename);
       fs.writeFileSync(`${folderPath}/${filename}`, response.data);
-      pagesDownloaded.add(url); // add data!
+      pagesDownloaded.add(url);
 
       const urls = getUrls(response.data, url);
 
       urls.forEach((absoluteUrl) => {
+        // Normalize each URL before adding to the queue
+        const normalizedAbsoluteUrl = normalizeURL(absoluteUrl);
+
         // Avoid adding duplicates and URLs from external domains
         if (
-          !visitedUrls.has(absoluteUrl) &&
+          !visitedUrls.has(normalizedAbsoluteUrl) &&
           isSameDomain(entryUrl, absoluteUrl)
         ) {
           queue.push({ url: absoluteUrl, parentUrl: url });
@@ -44,7 +48,8 @@ async function crawlWebsite(entryUrl, folderPath) {
       console.error(`Error fetching ${url}: ${error.message}`);
     }
 
-    visitedUrls.add(url);
+    // Add the normalized URL to the visited set
+    visitedUrls.add(normalizedUrl);
   }
 
   return pagesDownloaded;
@@ -72,6 +77,18 @@ function getFileName(url) {
   return filename + ".html";
 }
 
+// the job of normalizeURL function is to take in the input urls and then return
+// same output for the URLs that lead to the same page
+// example: 'http://www.boot.dev', 'http://www.BooT.dev', 'https://www.boot.dev'
+function normalizeURL(urlString) {
+  const urlObj = new URL(urlString);
+  const hostPath = `${urlObj.hostname}${urlObj.pathname}`;
+  if (hostPath.length > 0 && hostPath.slice(-1) === "/") {
+    return hostPath.slice(0, -1);
+  }
+  return hostPath;
+}
+
 function getUrls(htmlContent, baseUrl) {
   const $ = cheerio.load(htmlContent);
   const urls = [];
@@ -91,7 +108,6 @@ function isSameDomain(entryUrl, url) {
 // Example usage:
 function createLocalFolder(url) {
   const hostname = getDomainName(url);
-  console.log(hostname);
 
   if (!fs.existsSync(`websites/${hostname}`)) {
     fs.mkdirSync(`websites/${hostname}`);
