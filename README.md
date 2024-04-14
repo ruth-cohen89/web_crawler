@@ -10,7 +10,7 @@ This implementation introduces concurrency and a page limit for improved efficie
 
 The system consists of different parts:
 
-### 1. Crawler
+1. **Crawler**
 
 Responsible for managing the crawling process, including fetching web pages, parsing HTML content, extracting links, and downloading pages. It uses BFS algorithm for crawling the website urls.
 
