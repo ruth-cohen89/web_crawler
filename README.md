@@ -2,13 +2,13 @@
 
 ## Overview
 
-The Web Crawler is a tool that downloads all pages of a website into a local folder. It ensures each page is downloaded only once.
+The Web Crawler downloads all website pages into a local folder, ensuring each page is downloaded only once. It uses Breadth-First Search (BFS) for systematic traversal, preventing deep exploration, avoiding duplicates, supporting parallel processing, and managing memory efficiently. By traversing pages level by level and maintaining a queue of URLs, BFS ensures comprehensive coverage, prevents infinite loops, and optimizes resource usage.
 
 ## System Design
 
 The system consists of different parts:
 
-1. **Web Crawler Module**: Crawls the website, makes HTTP requests, parses HTML, and saves pages locally.
+1. **Web Crawler Module**: Crawls the website, makes HTTP requests, parses HTML, and saves pages locally. It uses BFS algorithm to ensure...?
 
 2. **URL Normalization**: Ensures URLs leading to the same page have the same representation to avoid duplicate downloads.
 
@@ -44,7 +44,9 @@ To improve scalability:
 
 - **Load Balancing**: Use a load balancer to evenly distribute requests among crawler instances.
 
-- **Caching**: Implement caching mechanisms to store previously crawled pages and reduce redundant downloads.
+- **Distributed File Storage**: Consider using distributed file storage solutions like Amazon S3 or Google Cloud Storage, which provide scalable and reliable storage for crawled pages.
+
+- **Caching**: Implement caching mechanisms to store previously crawled pages and reduce redundant downloads. Consider using an in-memory caching system like Redis or Memcached, or a distributed cache.
 
 - **Asynchronous Processing**: Utilize asynchronous programming to improve
   responsiveness and resource utilization.
@@ -56,7 +58,8 @@ To improve scalability:
 Provide the entry point URL and local folder path where pages will be stored. Run the crawler script to start crawling and downloading pages.
 
 ````bash
-node crawl.js
+npm start
+
 
 ## Dependencies
 - axios
@@ -65,4 +68,5 @@ node crawl.js
 ## Installation
 ```bash
 npm install axios cheerio
+
 ````
