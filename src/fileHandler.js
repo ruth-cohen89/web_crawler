@@ -53,4 +53,4 @@ function writeFile(filePath, content) {
   fs.writeFileSync(filePath, content);
 }
 
-module.exports = { createLocalFolder, getFileName, writeFile };
+module.exports = { createLocalFolder, getFileName, writeFile, getDomainName };
