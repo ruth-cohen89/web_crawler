@@ -33,6 +33,7 @@ async function crawlWebsite(
       downloadConcurrent = maxPages - pagesDownloaded.size;
       console.log("downloadConcurrent", downloadConcurrent);
     }
+
     await Promise.all(
       queue
         .splice(0, downloadConcurrent)
