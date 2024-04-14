@@ -63,7 +63,6 @@ Provide the entry point URL and local folder path where pages will be stored. Ru
 ````bash
 npm start
 
-
 ## Dependencies
 - axios
 - cheerio
