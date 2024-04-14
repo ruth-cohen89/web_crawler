@@ -62,6 +62,6 @@ Provide the entry point URL and local folder path where pages will be stored. Ru
 
 ```bash
 npm install
-npm install axios cheerio
+npm start
 
 ```
