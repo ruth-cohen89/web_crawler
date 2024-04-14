@@ -1,7 +1,7 @@
 const { crawlWebsite } = require("./src/crawl");
 const { createLocalFolder } = require("./src/fileHandler");
 
-const entryPoint = "https://www.larstornoe.com";
+const entryPoint = "https://www.example.com";
 //const entryPoint = "https://youtube.com";
 const folderPath = createLocalFolder(entryPoint);
 

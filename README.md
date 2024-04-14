@@ -60,15 +60,8 @@ If more resources are added then the page limit can be adjusted accordingly.
 
 Provide the entry point URL and local folder path where pages will be stored. Run the crawler script to start crawling and downloading pages.
 
-````bash
+```bash
+npm install
 npm start
 
-## Dependencies
-- axios
-- cheerio
-
-## Installation
-```bash
-npm install axios cheerio
-
-````
+```
