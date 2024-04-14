@@ -21,7 +21,7 @@ function createLocalFolder(url) {
   const hostname = getDomainName(url);
 
   if (!fs.existsSync(`./websites/${hostname}`)) {
-    fs.mkdirSync(`./websites/${hostname}`);
+    fs.mkdirSync(`./websites/${hostname}`, { recursive: true });
     console.log("folder created");
   }
   return `websites/${hostname}`;

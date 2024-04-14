@@ -20,6 +20,8 @@ The system consists of different parts:
 
 6. **Local Folder Creation**: Creates a local folder for storing downloaded pages, organized by domain names.
 
+7. **Domain Caching**: Each domain who is traversed, its travered urls are added to the cache, to prevent the crawler from crawling them again.
+
 ## Potential Bottlenecks
 
 Several factors may affect the performance and scalability of the web crawler:
