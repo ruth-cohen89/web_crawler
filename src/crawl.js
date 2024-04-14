@@ -12,7 +12,9 @@ const domainCache = {};
  * Crawls the website starting from the entry URL and downloads all pages into the designated local folder.
  * @param {string} entryUrl - The entry point URL of the website.
  * @param {string} folderPath - The local folder path where pages will be stored.
- * @returns {Set} - A Set containing the URLs of all downloaded pages.
+ * @param {number} downloadConcurrent - The maximum number of URLs to be downloaded concurrently.
+ * @param {number} maxPages - The maximum number of pages to be downloaded.
+ * @returns {Set<string>} - A Set containing the URLs of all downloaded pages.
  */
 async function crawlWebsite(
   entryUrl,
@@ -31,7 +33,6 @@ async function crawlWebsite(
       maxPages - pagesDownloaded.size > 0
     ) {
       downloadConcurrent = maxPages - pagesDownloaded.size;
-      console.log("downloadConcurrent", downloadConcurrent);
     }
 
     await Promise.all(
@@ -53,6 +54,15 @@ async function crawlWebsite(
   return pagesDownloaded;
 }
 
+/**
+ * Fetches the content of a webpage from the given URL, saves it locally, and extracts URLs for further crawling.
+ * @param {string} url - The URL of the webpage to fetch and process.
+ * @param {Set} visitedUrls - A Set containing the URLs of visited webpages.
+ * @param {Set} pagesDownloaded - A Set containing the URLs of downloaded webpages.
+ * @param {Array} queue - An array representing the queue of URLs to be crawled.
+ * @param {string} folderPath - The local folder path where pages will be stored.
+ * @param {string} entryUrl - The entry point URL of the website.
+ */
 async function fetchUrlAndUpdate(
   url,
   visitedUrls,

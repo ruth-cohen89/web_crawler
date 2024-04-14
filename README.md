@@ -1,4 +1,4 @@
-# Web Crawler
+# Web Crawler System Design
 
 ## Overview
 
@@ -6,23 +6,27 @@ The Web Crawler downloads all website pages into a local folder, ensuring each p
 
 This implementation introduces concurrency and a page limit for improved efficiency.
 
-## System Design
+## Components
 
 The system consists of different parts:
 
-1. **Web Crawler Module**: Crawls the website, makes HTTP requests, parses HTML, and saves pages locally. It uses BFS algorithm to ensure...?
+### 1. Crawler
 
-2. **URL Normalization**: Ensures URLs leading to the same page have the same representation to avoid duplicate downloads.
+Responsible for managing the crawling process, including fetching web pages, parsing HTML content, extracting links, and downloading pages. It uses BFS algorithm for crawling the website urls.
 
-3. **File Naming Logic**: Generates filenames based on URLs to ensure uniqueness and compatibility with the filesystem.
+2. **Queue**: Maintains a queue of URLs to be crawled. URLs are added to the frontier in a BFS manner, ensuring systematic exploration of the website hierarchy.
 
-4. **URL Extraction**: Parses HTML to extract URLs from anchor tags' href attributes.
+3. **Domain Caching**: Each domain who is traversed, its travered urls are added to the cache, to prevent the crawler from crawling them again.
 
-5. **Domain Matching**: Determines if a URL belongs to the same domain as the entry point URL to prevent crawling external links.
+4. **File Naming Logic**: Generates filenames based on URLs to ensure uniqueness and compatibility with the filesystem.
 
-6. **Local Folder Creation**: Creates a local folder for storing downloaded pages, organized by domain names.
+5. **Local Folder Creation**: Creates a local folder for storing downloaded pages, organized by domain names.
 
-7. **Domain Caching**: Each domain who is traversed, its travered urls are added to the cache, to prevent the crawler from crawling them again.
+6. **URL Normalization**: Ensures URLs leading to the same page have the same representation to avoid duplicate downloads.
+
+7. **URL Extraction**: Parses HTML to extract URLs from anchor tags' href attributes.
+
+8. **Domain Matching**: Determines if a URL belongs to the same domain as the entry point URL to prevent crawling external links.
 
 ## Potential Bottlenecks
 
@@ -34,15 +38,11 @@ Several factors may affect the performance and scalability of the web crawler:
 
 - **Concurrency**: Processing multiple URLs concurrently can improve performance but may lead to resource contention.
 
-- **Error Handling**: Properly handling errors during HTTP requests, HTML parsing, or filesystem operations is crucial.
-
-- **Scalability**: As the number of pages and website complexity increases, the system should scale horizontally to handle the load.
+- **Cache Performance**: The performance of the domain cache can impact overall crawling speed. Optimizing cache usage and ensuring efficient data access are crucial for maintaining system performance.
 
 ## Scalability Considerations
 
 To improve scalability:
-
-- **Parallel Processing**: Implement concurrency to process multiple URLs simultaneously.
 
 - **Distributed Architecture**: Distribute the workload across multiple servers for scalability and resilience.
 
@@ -50,9 +50,13 @@ To improve scalability:
 
 - **Distributed File Storage**: Consider using distributed file storage solutions like Amazon S3 or Google Cloud Storage, which provide scalable and reliable storage for crawled pages.
 
-- **Caching**: Implement caching mechanisms to store previously crawled pages and reduce redundant downloads. Consider using an in-memory caching system like Redis or Memcached, or a distributed cache.
+- **Distributed Caching**: Implement caching mechanisms to store previously crawled pages and reduce redundant downloads. Consider using an in-memory caching system like Redis or Memcached, or a distributed cache.
+
+- **Data Replication**: Replicate the domain cache and file storage across multiple servers to maintain consistency and improve fault tolerance. Implementing replication mechanisms ensures that each server has access to the latest data and can handle requests independently.
 
 - **Monitoring and Alerting**: Implement monitoring systems to detect and respond to performance issues or failures.
+
+If more resources are added then the page limit can be adjusted accordingly.
 
 ## Usage
 

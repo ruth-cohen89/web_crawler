@@ -1,17 +1,20 @@
-// index.js
 const { crawlWebsite } = require("./src/crawl");
 const { createLocalFolder } = require("./src/fileHandler");
 
-//const entryPoint = "https://www.larstornoe.com";
-const entryPoint = "https://youtube.com";
+const entryPoint = "https://www.larstornoe.com";
+//const entryPoint = "https://youtube.com";
 const folderPath = createLocalFolder(entryPoint);
+
+// Number of concurrent downloads
 const downloadConcurrent = 10;
 
-// Maximum pages to download from a website
-// Limits big websites with a lot of pages (like instagram)
-// If more resources are added (more servers) this limit can be adjusted
+// Maximum number of pages to download from a website
+// Limits big websites with a lot of pages (like youtube.com)
 const maxPages = 100;
 
+/**
+ * Initiating the crawling process.
+ */
 async function main() {
   try {
     const pagesDownloaded = await crawlWebsite(

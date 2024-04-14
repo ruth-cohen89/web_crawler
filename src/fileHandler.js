@@ -1,13 +1,14 @@
 const fs = require("fs");
 
+/**
+ * Retrieves the domain name from the given URL.
+ * @param {string} url - The URL from which to extract the domain name.
+ * @returns {string} - The domain name extracted from the URL.
+ */
 function getDomainName(url) {
-  // Parse the URL to get the hostname
   const { hostname } = new URL(url);
-
-  // Split the hostname by periods (.)
   const parts = hostname.split(".");
 
-  // Remove the first part if it's 'www'
   if (parts[0] === "www") {
     parts.shift();
   }
@@ -17,13 +18,18 @@ function getDomainName(url) {
   return domain;
 }
 
+/**
+ * Creates a local folder based on the domain name extracted from the URL.
+ * @param {string} url - The URL used to extract the domain name for folder creation.
+ * @returns {string} - The path of the created local folder.
+ * @throws {Error} - Throws an error if folder creation fails.
+ */
 function createLocalFolder(url) {
   try {
     const hostname = getDomainName(url);
 
     if (!fs.existsSync(`./websites/${hostname}`)) {
       fs.mkdirSync(`./websites/${hostname}`, { recursive: true });
-      console.log("folder created");
     }
     return `websites/${hostname}`;
   } catch (error) {
@@ -32,6 +38,12 @@ function createLocalFolder(url) {
   }
 }
 
+/**
+ * Generates a filename based on the URL.
+ * @param {string} url - The URL used to generate the filename.
+ * @returns {string} - The generated filename.
+ * @throws {Error} - Throws an error if filename generation fails.
+ */
 function getFileName(url) {
   try {
     // Extract hostname and path portions of the URL
@@ -59,6 +71,12 @@ function getFileName(url) {
   }
 }
 
+/**
+ * Writes content to a file at the specified file path.
+ * @param {string} filePath - The path to the file where content will be written.
+ * @param {string} content - The content to write to the file.
+ * @throws {Error} - Throws an error if file writing fails.
+ */
 function writeFile(filePath, content) {
   try {
     fs.writeFileSync(filePath, content);

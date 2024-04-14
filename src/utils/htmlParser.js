@@ -1,6 +1,12 @@
 const { URL } = require("url");
 const cheerio = require("cheerio");
 
+/**
+ * Parses the HTML content and extracts absolute URLs from anchor tags' href attributes.
+ * @param {string} htmlContent - The HTML content of the webpage.
+ * @param {string} baseUrl - The base URL of the webpage.
+ * @returns {Array<string>} - An array of absolute URLs extracted from the HTML content.
+ */
 function getUrls(htmlContent, baseUrl) {
   const urls = [];
 
