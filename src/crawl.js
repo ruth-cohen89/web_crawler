@@ -3,14 +3,24 @@ const { writeFile, getFileName, getDomainName } = require("./fileHandler");
 const { isSameDomain, normalizeURL } = require("./utils/urlUtils");
 const { getUrls } = require("./utils/htmlParser");
 
-// Define an object to store crawled URLs for each domain
+/**
+ * Cache to store visited URLs for each domain.
+ */
 const domainCache = {};
 
+/**
+ * Crawls the website starting from the entry URL and downloads all pages into the designated local folder.
+ * @param {string} entryUrl - The entry point URL of the website.
+ * @param {string} folderPath - The local folder path where pages will be stored.
+ * @returns {Set} - A Set containing the URLs of all downloaded pages.
+ */
 async function crawlWebsite(entryUrl, folderPath) {
   const visitedUrls = new Set();
   const pagesDownloaded = new Set();
   const queue = [{ url: entryUrl, parentUrl: "" }];
   console.log("welcome", domainCache);
+
+  // Main crawling loop
   while (queue.length > 0) {
     const { url, parentUrl } = queue.shift();
 
@@ -18,26 +28,30 @@ async function crawlWebsite(entryUrl, folderPath) {
     const normalizedUrl = normalizeURL(url);
     const domain = getDomainName(url);
 
-    // Initialize domain cache if not exists
+    // Initialize the domain cache to store visited URLs for each domain
     if (!domainCache[domain]) {
       domainCache[domain] = new Set();
     }
 
-    // Skip if URL is already crawled for this domain
+    // Skip crawling if URL is already visited for this domain
     if (domainCache[domain].has(url)) {
       continue;
     }
 
     try {
+      // Fetch the webpage content
       const response = await axios.get(url);
 
+      // Check if the response is successful
       if (response.status !== 200) {
         continue;
       }
 
+      // Generate filename and file path for saving the webpage
       const filename = getFileName(url);
       const filePath = `${folderPath}/${filename}`;
 
+      // Write the webpage content to a file
       writeFile(filePath, response.data);
 
       // Add the URL to the set of downloaded pages
