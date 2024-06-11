@@ -1,3 +1,13 @@
+<h1 align="center">Web_crawler</h1>
+
+<p align="center">
+
+ <img width="310" height="150" src="https://railsware.com/blog/wp-content/uploads/2018/09/2400%D1%851260-rw-blog-node-js.png" />
+
+ <img width="320" height="160" src="https://raw.githubusercontent.com/gitgik/distributed-system-design/bc89b6300f0c2707446e9885918d5d0b7320e18d/images/designing_crawler_detailed_component.png" />
+ 
+</p>
+
 # Web Crawler System Design
 
 ## Overview
