@@ -7,7 +7,7 @@ The Web Crawler downloads all website pages into a local folder, ensuring each p
 This implementation introduces concurrency and a page limit for improved efficiency.
 
 <p align="center">
- <img width="550" height="200" src="https://raw.githubusercontent.com/gitgik/distributed-system-design/bc89b6300f0c2707446e9885918d5d0b7320e18d/images/designing_crawler_detailed_component.png" />
+ <img width="800" height="298" src="https://raw.githubusercontent.com/gitgik/distributed-system-design/bc89b6300f0c2707446e9885918d5d0b7320e18d/images/designing_crawler_detailed_component.png" />
 </p>
 
 ## Components
