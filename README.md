@@ -27,7 +27,7 @@ The system consists of different parts:
 8. **Domain Matching**: Determines if a URL belongs to the same domain as the entry point URL to prevent crawling external links.
 
 <p align="center">
- <img width="750" height="450" src="https://raw.githubusercontent.com/gitgik/distributed-system-design/bc89b6300f0c2707446e9885918d5d0b7320e18d//images/designing_webcrawler_high_level.png" />
+ <img width="800" height="298" src="https://raw.githubusercontent.com/gitgik/distributed-system-design/bc89b6300f0c2707446e9885918d5d0b7320e18d//images/designing_webcrawler_high_level.png" />
 </p>
 
 ## Potential Bottlenecks
