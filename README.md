@@ -6,10 +6,6 @@ The Web Crawler downloads all website pages into a local folder, ensuring each p
 
 This implementation introduces concurrency and a page limit for improved efficiency.
 
-<p align="center">
- <img width="800" height="368" src="https://raw.githubusercontent.com/gitgik/distributed-system-design/bc89b6300f0c2707446e9885918d5d0b7320e18d/images/designing_crawler_detailed_component.png" />
-</p>
-
 ## Components
 
 The system consists of different parts:
@@ -29,6 +25,10 @@ The system consists of different parts:
 7. **URL Extraction**: Parses HTML to extract URLs from anchor tags' href attributes.
 
 8. **Domain Matching**: Determines if a URL belongs to the same domain as the entry point URL to prevent crawling external links.
+
+<p align="center">
+ <img width="750" height="450" src="https://raw.githubusercontent.com/gitgik/distributed-system-design/bc89b6300f0c2707446e9885918d5d0b7320e18d/images/designing_crawler_detailed_component.png" />
+</p>
 
 ## Potential Bottlenecks
 
