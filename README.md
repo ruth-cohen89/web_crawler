@@ -1,16 +1,14 @@
 <h1 align="center">Web_crawler</h1>
 
-<p align="center">
- <img width="420" height="260" src="https://raw.githubusercontent.com/gitgik/distributed-system-design/bc89b6300f0c2707446e9885918d5d0b7320e18d/images/designing_crawler_detailed_component.png" />
-</p>
-
-# Web Crawler System Design
-
 ## Overview
 
 The Web Crawler downloads all website pages into a local folder, ensuring each page is downloaded only once. It uses Breadth-First Search (BFS) for systematic traversal, preventing deep exploration, avoiding duplicates, supporting parallel processing, and managing memory efficiently. By traversing pages level by level and maintaining a queue of URLs, BFS ensures comprehensive coverage, prevents infinite loops, and optimizes resource usage.
 
 This implementation introduces concurrency and a page limit for improved efficiency.
+
+<p align="center">
+ <img width="550" height="200" src="https://raw.githubusercontent.com/gitgik/distributed-system-design/bc89b6300f0c2707446e9885918d5d0b7320e18d/images/designing_crawler_detailed_component.png" />
+</p>
 
 ## Components
 
