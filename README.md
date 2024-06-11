@@ -1,8 +1,8 @@
-<h1 align="center">Web_crawler</h1>
+# Web_crawler
 
 ## Overview
 
-The Web Crawler downloads all website pages into a local folder, ensuring each page is downloaded only once. It uses Breadth-First Search (BFS) for systematic traversal, preventing deep exploration, avoiding duplicates, supporting parallel processing, and managing memory efficiently. By traversing pages level by level and maintaining a queue of URLs, BFS ensures comprehensive coverage, prevents infinite loops, and optimizes resource usage.
+The Web Crawler downloads all website pages from a given domain into a local folder, ensuring each page is downloaded only once. It uses Breadth-First Search (BFS) for systematic traversal, preventing deep exploration, avoiding duplicates, supporting parallel processing, and managing memory efficiently. By traversing pages level by level and maintaining a queue of URLs, BFS ensures comprehensive coverage, prevents infinite loops, and optimizes resource usage.
 
 This implementation introduces concurrency and a page limit for improved efficiency.
 
